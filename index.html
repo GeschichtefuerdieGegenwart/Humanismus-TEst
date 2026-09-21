@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanistischer Werte-Test</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --light-bg: #f5f9fc;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --text-color: #333333;
+            --light-text: #7f8c8d;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+        
+        h1 {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--light-text);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .instructions {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .category {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .category-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-title .icon {
+            margin-right: 10px;
+            font-size: 1.5em;
+            color: var(--primary-color);
+        }
+        
+        .situation {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .situation:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .situation-text {
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        
+        .options {
+            margin-top: 15px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(236, 240, 241, 0.5);
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: rgba(236, 240, 241, 1);
+        }
+        
+        .option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        input[type="radio"]:checked {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+        }
+        
+        input[type="radio"]:hover {
+            transform: scale(1.1);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: block;
+            margin: 40px auto;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .results {
+            display: none;
+            margin-top: 40px;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .results-title {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .result-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .result-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--success-color));
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+        
+        .score-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .score {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .percentage {
+            color: var(--light-text);
+            font-size: 0.9em;
+        }
+        
+        .interpretation {
+            font-size: 0.95em;
+            line-height: 1.5;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(52, 152, 219, 0.05);
+            margin-top: 10px;
+        }
+        
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+        
+        .summary {
+            margin-top: 40px;
+            padding: 25px;
+            background-color: rgba(52, 152, 219, 0.05);
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .summary-title {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .summary-list {
+            padding-left: 20px;
+        }
+        
+        .summary-list li {
+            margin-bottom: 10px;
+        }
+        
+        .print-btn {
+            background-color: var(--secondary-color);
+            margin-top: 20px;
+        }
+        
+        .value-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            font-size: 0.8em;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Humanistischer Werte-Test</h1>
+        <div class="subtitle">Reflexion deiner Werte in zentralen Kategorien des Humanismus und bei Wertekonflikten</div>
+        
+        <div class="instructions">
+            <p><strong>Anleitung:</strong> Lies jede Situation aufmerksam durch und wähle die Handlungsoption, die deinem Verhalten am ehesten entspricht. Jede Antwort wird in der Auswertung berücksichtigt.</p>
+            <p>Im zweiten Teil geht es um Wertekonflikte - hier musst du entscheiden, welcher Wert dir in der jeweiligen Situation wichtiger ist.</p>
+            <p>Am Ende erhältst du eine detaillierte Auswertung deiner humanistischen Werte mit visueller Darstellung.</p>
+        </div>
+        
+        <form id="questionnaire">
+            <!-- Kategorie 1: Menschenwürde & Gleichheit -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">👥</span>
+                    <span>1. Menschenwürde & Gleichheit</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Bewerbungsgespräch im Team - Ein Kollege schlägt vor, eine Bewerberin wegen ihres ausländischen Namens nicht zum Gespräch einzuladen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q1" value="4" required> A) Du widersprichst und bestehst auf faire Behandlung, unabhängig von Herkunft.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q1" value="3"> B) Du schlägst vor abzuwarten, ob genug „besser passende" Bewerbungen eingehen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q1" value="2"> C) Du schweigst, um keinen Konflikt im Team auszulösen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q1" value="1"> D) Du unterstützt die Entscheidung, weil das Team so homogener bleibt.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Vortrag über Inklusion in der Schule - Eine Mitschülerin im Rollstuhl wird bei der Gruppenaufteilung übergangen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q2" value="4" required> A) Du weist die Lehrkraft freundlich darauf hin und bist bereit, sie zu integrieren.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q2" value="3"> B) Du schlägst vor, sie einem anderen Team zuzuteilen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q2" value="2"> C) Du merkst es, tust aber nichts, weil es nicht dein Problem scheint.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q2" value="1"> D) Du meidest sie absichtlich, um das Arbeitstempo nicht zu verringern.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 2: Empathie & Mitgefühl -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">💖</span>
+                    <span>2. Empathie & Mitgefühl</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Neuer Mitschüler wirkt schüchtern - Ein neuer Mitschüler kommt in eure Klasse und sitzt in der Pause meist allein.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q3" value="4" required> A) Du sprichst ihn an, lädst ihn in die Gruppe ein und hörst ihm zu.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q3" value="3"> B) Du setzt dich nur manchmal zu ihm, wenn du Zeit hast.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q3" value="2"> C) Du findest es schade, unternimmst aber nichts.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q3" value="1"> D) Du ignorierst ihn, es betrifft dich nicht.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Obdachloser bittet an der Bahnhaltestelle um Hilfe - Eine ältere Frau bittet freundlich um ein bisschen Kleingeld, sieht sehr hilfsbedürftig aus.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q4" value="4" required> A) Du spendest Geld und bietest ein kurzes Gespräch an.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q4" value="3"> B) Du gibst ihr Kleingeld, aber vermeidest Blickkontakt.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q4" value="2"> C) Du läufst vorbei, weil du dich unwohl fühlst.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q4" value="1"> D) Du zeigst Ablehnung und schimpfst über „Bettler".</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 3: Gerechtigkeit & Fairness -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">⚖️</span>
+                    <span>3. Gerechtigkeit & Fairness</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Prüfungsbetrug im Klassenraum - Du bemerkst, dass ein Mitschüler bei einer wichtigen Prüfung schummelt.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q5" value="4" required> A) Du meldest das Verhalten offen und erklärst, warum faire Noten wichtig sind.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q5" value="3"> B) Du sprichst den Mitschüler privat darauf an, meldest es aber nicht.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q5" value="2"> C) Du unternimmst nichts – ist nicht dein Problem.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q5" value="1"> D) Du deckst den Betrug und profitierst vielleicht selbst davon.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Teamprojekt – ungleiche Lasten - In einem Gruppenprojekt arbeitet eine Person gar nicht mit, bekommt aber dieselbe Note.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q6" value="4" required> A) Du sprichst die Situation offen an und setzt dich für gerechte Bewertung ein.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q6" value="3"> B) Du versuchst, das Thema sanft zu regeln, um niemanden bloßzustellen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q6" value="2"> C) Du akzeptierst es und machst still alles selbst.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q6" value="1"> D) Du nutzt die Situation, um wenig zu tun, solange niemand auffällt.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 4: Freiheit & Selbstbestimmung -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">🕊️</span>
+                    <span>4. Freiheit & Selbstbestimmung</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Kleidungsvorschriften im Freundeskreis - Deine Freunde wollen, dass alle zu einer Party ein bestimmtes Outfit tragen – du findest das unpassend.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q7" value="4" required> A) Du erklärst selbstbewusst deine Sicht und trägst, worin du dich wohlfühlst.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q7" value="3"> B) Du diskutierst mit, ob ein Kompromiss möglich ist.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q7" value="2"> C) Du fügst dich, um nicht aufzufallen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q7" value="1"> D) Du passt dich strikt an und kritisierst diejenigen, die es nicht tun.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Studienwahl unter Elterndruck - Deine Eltern wollen, dass du Jura studierst, du möchtest aber Kunst machen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q8" value="4" required> A) Du entscheidest dich für Kunst und erklärst offen deine Gründe.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q8" value="3"> B) Du führst lange Gespräche, suchst einen Mittelweg.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q8" value="2"> C) Du belegst Jura gegen deinen Wunsch.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q8" value="1"> D) Du übernimmst ungefragt die Familienmeinung.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 5: Verantwortung & Solidarität -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">🤝</span>
+                    <span>5. Verantwortung & Solidarität</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Mitschüler wird im Chat gemobbt - Du siehst in einem Gruppenchat, dass sich mehrere über einen Mitschüler lustig machen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q9" value="4" required> A) Du schreitest ein, verteidigst ihn offen und meldest die Situation.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q9" value="3"> B) Du schreibst dem Betroffenen privat und stärkst ihm den Rücken.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q9" value="2"> C) Du liest mit, hältst dich aber raus.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q9" value="1"> D) Du machst mit und verbreitest die Nachrichten weiter.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Nachbarschaft braucht Hilfe - Im Haus fällt einer älteren Nachbarin der Einkauf schwer.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q10" value="4" required> A) Du bietest von dir aus regelmäßig Unterstützung an.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q10" value="3"> B) Du hilfst gelegentlich, wenn du Zeit hast.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q10" value="2"> C) Du findest, das ist die Aufgabe ihrer Familie.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q10" value="1"> D) Du denkst, sie soll selbst zurechtkommen.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 6: Wahrhaftigkeit & Ehrlichkeit -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">🔍</span>
+                    <span>6. Wahrhaftigkeit & Ehrlichkeit</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Fehlbetrag in der Klassenkasse - Du entdeckst versehentlich einen kleinen Betrag zu viel in deiner eigenen Geldbörse nach dem Einsammeln von Beiträgen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q11" value="4" required> A) Du meldest den Fehler sofort und gibst das Geld zurück.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q11" value="3"> B) Du wartest, ob jemand fragt, und gibst es dann heraus.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q11" value="2"> C) Du behältst es, wartest aber ab, ob etwas auffällt.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q11" value="1"> D) Du nimmst es als glücklichen „Zufall" und schweigst.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Unehrliche Produktbewertung - Du wirst von einer Freundin gebeten, ein Produkt positiv zu bewerten, das sie online verkauft, obwohl du es nicht magst.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q12" value="4" required> A) Du bleibst ehrlich und schreibst eine sachlich-kritische Bewertung.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q12" value="3"> B) Du gibst keine Bewertung ab, um Konflikte zu vermeiden.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q12" value="2"> C) Du folgst der Bitte, weil dir die Freundschaft wichtiger ist.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q12" value="1"> D) Du schreibst überschwänglich positiv, um ihr einen Vorteil zu verschaffen.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 7: Toleranz & Pluralismus -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">🌈</span>
+                    <span>7. Toleranz & Pluralismus</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Politische Diskussion in der Familie - Beim Abendessen fängt jemand an, extreme politische Ansichten zu äußern, die du ablehnst.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q13" value="4" required> A) Du trittst argumentativ für Meinungsfreiheit und gegen Hass ein.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q13" value="3"> B) Du versuchst, die Diskussion auf eine sachliche Ebene zu lenken.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q13" value="2"> C) Du verlässt das Gespräch, weil dir die Diskussion unangenehm ist.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q13" value="1"> D) Du lachst die andere Person aus oder verurteilst sie heftig.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Religion im Freundeskreis - Eine Freundin fastet aus religiösen Gründen, der Rest der Gruppe versteht das nicht.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q14" value="4" required> A) Du akzeptierst und unterstützt ihre Entscheidung, auch wenn du es selbst anders machst.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q14" value="3"> B) Du willst mehr über ihre Beweggründe erfahren.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q14" value="2"> C) Du findest es „unnötig", thematisierst es aber nicht weiter.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q14" value="1"> D) Du machst dich darüber lustig oder grenzt sie aus.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 8: Friedfertigkeit & Gewaltfreiheit -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">☮️</span>
+                    <span>8. Friedfertigkeit & Gewaltfreiheit</span>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 1: Konflikt im Verein - Bei einem Streit zwischen zwei Teams droht die Situation zu eskalieren.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q15" value="4" required> A) Du setzt dich für eine friedliche Lösung und an einen Runden Tisch ein.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q15" value="3"> B) Du schlägst vor, für einen Tag getrennte Wege zu gehen, um abzukühlen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q15" value="2"> C) Du bleibst passiv und hoffst, dass die anderen das klären.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q15" value="1"> D) Du befeuerst den Streit, weil du „Recht bekommen" willst.</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="situation">
+                    <div class="situation-text">Situation 2: Körperliche Auseinandersetzung auf dem Schulhof - Du siehst, wie zwei Mitschüler anfangen, sich körperlich zu bedrohen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q16" value="4" required> A) Du gehst dazwischen und rufst nach Hilfe oder einer Lehrkraft.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q16" value="3"> B) Du versuchst, mit Worten zu schlichten.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q16" value="2"> C) Du beobachtest, ohne einzugreifen.</label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q16" value="1"> D) Du feuerst die Kontrahenten an oder filmst den Vorfall.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kategorie 9: Wertekonflikte & Dilemmata -->
+            <div class="category">
+                <div class="category-title">
+                    <span class="icon">⚖️</span>
+                    <span>9. Wertekonflikte & Dilemmata</span>
+                </div>
+                
+                <!-- Dilemma 1 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 1: Ehrlichkeit vs. Mitgefühl - Dein Freund fragt dich, ob seine Präsentation vor der Klasse gut war. Du fandest sie schwach, aber er wirkt sehr verunsichert.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q17" value="H" required> A) Ich sage ihm ehrlich meine negative Meinung, um ihm bei Verbesserungen zu helfen. <span class="value-tag">Ehrlichkeit</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q17" value="E"> B) Ich formuliere es diplomatisch und betone positive Aspekte, verschweige aber Wesentliches. <span class="value-tag">Mitgefühl</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q17" value="E"> C) Ich sage, sie war super, um ihn aufzubauen – auch wenn es nicht stimmt. <span class="value-tag">Mitgefühl</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q17" value="T"> D) Ich versuche, das Gespräch auf ein anderes Thema zu lenken, um niemanden zu verletzen. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 2 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 2: Freiheit vs. Verantwortung - In einer Messengergruppe werden diskriminierende Witze verschickt. Du bist neu in der Gruppe.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q18" value="V" required> A) Ich sage offen meine Meinung und fordere, mit sowas aufzuhören. <span class="value-tag">Verantwortung</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q18" value="F"> B) Ich verlasse kommentarlos die Gruppe. <span class="value-tag">Freiheit</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q18" value="T"> C) Ich lasse es laufen, weil alle das scheinbar lustig finden. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q18" value="E"> D) Ich schreibe den Verfasser privat an und erkläre, warum ich das unpassend finde. <span class="value-tag">Mitgefühl</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 3 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 3: Gerechtigkeit vs. Loyalität - Du erfährst, dass eine Freundin bei einer wichtigen Klassenarbeit abgeschrieben hat.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q19" value="G" required> A) Ich melde den Vorfall der Lehrkraft, weil Regeln für alle gelten müssen. <span class="value-tag">Gerechtigkeit</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q19" value="E"> B) Ich spreche meine Freundin darauf an und ermutige sie, es selbst der Lehrkraft zu sagen. <span class="value-tag">Mitgefühl</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q19" value="T"> C) Ich schweige, weil sie meine Freundin ist. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q19" value="M"> D) Ich sage ihr, dass ich ihr Verhalten nicht gut finde, unternehme aber sonst nichts. <span class="value-tag">Menschenwürde</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 4 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 4: Solidarität vs. Selbstschutz - Du siehst, wie eine Person in der Bahn lautstark diskriminiert wird, fühlst dich aber nicht sicher einzugreifen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q20" value="V" required> A) Ich mische mich aktiv ein, auch wenn ich selbst Nachteile befürchte. <span class="value-tag">Verantwortung</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q20" value="T"> B) Ich filme das Geschehen zur Dokumentation und schicke es an eine Vertrauensperson. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q20" value="S"> C) Ich ziehe mich raus, um mich selbst zu schützen. <span class="value-tag">Selbstschutz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q20" value="E"> D) Ich hole Hilfe (zum Beispiel Fahrer*in, Polizei) oder bitte andere, mit einzuschreiten. <span class="value-tag">Mitgefühl</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 5 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 5: Menschenwürde vs. Ehrlichkeit - Jemand in der Klasse wird ständig wegen eines Makels zum Ziel von Spott. Du wirst gefragt, ob du selbst das auch so siehst.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q21" value="M" required> A) Ich widerspreche offen dem Spott, auch wenn ich damit allein dastehe. <span class="value-tag">Menschenwürde</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q21" value="T"> B) Ich versuche, zwischen den Parteien zu vermitteln, ohne klar Stellung zu beziehen. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q21" value="S"> C) Ich stimme der Mehrheit diplomatisch zu, um nicht selbst ausgegrenzt zu werden. <span class="value-tag">Selbstschutz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q21" value="H"> D) Ich sage der betroffenen Person ehrlich, was ich wirklich denke, auch wenn es verletzend sein könnte. <span class="value-tag">Ehrlichkeit</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 6 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 6: Toleranz vs. Gerechtigkeit - Ein Mitschüler äußert sich ständig intolerant über andere Religionen und Minderheiten.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q22" value="G" required> A) Ich widerspreche klar und fordere Gerechtigkeit für Betroffene. <span class="value-tag">Gerechtigkeit</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q22" value="T"> B) Ich versuche, die Beweggründe des Mitschülers besser zu verstehen, ohne zu werten. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q22" value="S"> C) Ich ignoriere die Aussagen, um keinen Streit zu provozieren. <span class="value-tag">Selbstschutz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q22" value="V"> D) Ich melde die Aussagen einer Vertrauenslehrkraft. <span class="value-tag">Verantwortung</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 7 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 7: Freiheit vs. Pflichtbewusstsein - Du hast versprochen, bei einer ehrenamtlichen Aktion mitzumachen, aber nun ein spannendes Freizeitangebot bekommen.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q23" value="F" required> A) Ich sage der Gruppe ehrlich ab und mache, worauf ich Lust habe. <span class="value-tag">Freiheit</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q23" value="V"> B) Ich gehe trotzdem zum Ehrenamt, weil Verpflichtungen für mich wichtig sind. <span class="value-tag">Verantwortung</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q23" value="T"> C) Ich versuche, beiden Seiten gerecht zu werden, plane kurzfristig, kann aber eventuell beides nicht richtig machen. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q23" value="S"> D) Ich schütze mich vor Stress und gehe zu keinem der beiden Termine. <span class="value-tag">Selbstschutz</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dilemma 8 -->
+                <div class="situation">
+                    <div class="situation-text">Dilemma 8: Empathie vs. Gerechtigkeit - Zwei Freunde streiten sich. Eine*r ist sehr traurig, obwohl eigentlich die andere Person im Recht ist.</div>
+                    <div class="options">
+                        <div class="option">
+                            <label><input type="radio" name="q24" value="E" required> A) Ich unterstütze die traurige Person, weil ihr Kummer mir wichtiger ist als die Sache. <span class="value-tag">Mitgefühl</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q24" value="G"> B) Ich ergreife klar Partei für die Person, die sachlich im Recht ist. <span class="value-tag">Gerechtigkeit</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q24" value="T"> C) Ich höre beiden zu, ohne Position zu beziehen. <span class="value-tag">Toleranz</span></label>
+                        </div>
+                        <div class="option">
+                            <label><input type="radio" name="q24" value="S"> D) Ich ziehe mich zurück, weil ich niemanden enttäuschen will. <span class="value-tag">Selbstschutz</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" id="evaluate-btn">Auswertung anzeigen</button>
+        </form>
+        
+        <div id="results" class="results">
+            <h2 class="results-title">Dein humanistisches Werteprofil</h2>
+            
+            <div class="chart-container">
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <h3>Deine Wertprioritäten in Konfliktsituationen</h3>
+                <canvas id="valueChart" width="400" height="300"></canvas>
+            </div>
+            
+            <div class="results-grid">
+                <div id="result-area1" class="result-card">
+                    <div class="result-title">
+                        <span>1. Menschenwürde & Gleichheit</span>
+                        <span id="score1" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage1" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress1" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation1" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area2" class="result-card">
+                    <div class="result-title">
+                        <span>2. Empathie & Mitgefühl</span>
+                        <span id="score2" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage2" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress2" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation2" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area3" class="result-card">
+                    <div class="result-title">
+                        <span>3. Gerechtigkeit & Fairness</span>
+                        <span id="score3" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage3" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress3" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation3" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area4" class="result-card">
+                    <div class="result-title">
+                        <span>4. Freiheit & Selbstbestimmung</span>
+                        <span id="score4" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage4" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress4" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation4" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area5" class="result-card">
+                    <div class="result-title">
+                        <span>5. Verantwortung & Solidarität</span>
+                        <span id="score5" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage5" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress5" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation5" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area6" class="result-card">
+                    <div class="result-title">
+                        <span>6. Wahrhaftigkeit & Ehrlichkeit</span>
+                        <span id="score6" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage6" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress6" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation6" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area7" class="result-card">
+                    <div class="result-title">
+                        <span>7. Toleranz & Pluralismus</span>
+                        <span id="score7" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage7" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress7" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation7" class="interpretation"></div>
+                </div>
+                
+                <div id="result-area8" class="result-card">
+                    <div class="result-title">
+                        <span>8. Friedfertigkeit & Gewaltfreiheit</span>
+                        <span id="score8" class="score">0/8</span>
+                    </div>
+                    <div class="score-info">
+                        <span id="percentage8" class="percentage">0%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="progress8" class="progress-bar"></div>
+                    </div>
+                    <div id="interpretation8" class="interpretation"></div>
+                </div>
+            </div>
+            
+            <div class="summary">
+                <h3 class="summary-title">Reflexion deiner Ergebnisse</h3>
+                <ul class="summary-list">
+                    <li><strong>In welchen Kategorien zeigen sich deine stärksten humanistischen Werte?</strong> (Punkte über 6)</li>
+                    <li><strong>Welche Bereiche könnten mehr Aufmerksamkeit verdienen?</strong> (Punkte unter 4)</li>
+                    <li><strong>Welche Werte priorisierst du in Konfliktsituationen?</strong> (Siehe Balkendiagramm)</li>
+                    <li><strong>Wie könntest du deine Werte im Alltag noch besser leben?</strong></li>
+                    <li><strong>Welche Situationen aus dem Test würdest du vielleicht anders handhaben wollen?</strong></li>
+                </ul>
+            </div>
+            
+            <button type="button" class="print-btn" onclick="window.print()">Ergebnis drucken</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        console.log("Script gestartet");
+
+        // Chart Variablen
+        let radarChart;
+        let valueChart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM geladen");
+            const button = document.getElementById('evaluate-btn');
+            if (button) {
+                console.log("Button gefunden");
+                button.addEventListener('click', calculateResults);
+            } else {
+                console.error("Button nicht gefunden!");
+            }
+        });
+
+        function calculateResults() {
+            console.log("calculateResults aufgerufen");
+
+            // Ergebnisse berechnen
+            let scores = [];
+            let allAnswered = true;
+
+            // Für jede Kategorie (8 Kategorien mit je 2 Fragen)
+            for (let i = 1; i <= 8; i++) {
+                let categoryScore = 0;
+
+                // Jede Frage in der Kategorie (2 Fragen pro Kategorie)
+                for (let j = 1; j <= 2; j++) {
+                    const questionNum = (i-1)*2 + j;
+                    const selected = document.querySelector(`input[name="q${questionNum}"]:checked`);
+
+                    if (selected) {
+                        categoryScore += parseInt(selected.value);
+                    } else {
+                        allAnswered = false;
+                        console.log(`Frage q${questionNum} nicht beantwortet`);
+                        // Markiere die nicht beantwortete Frage
+                        const questionElement = document.querySelector(`input[name="q${questionNum}"]`);
+                        if (questionElement) {
+                            const situation = questionElement.closest('.situation');
+                            if (situation) {
+                                situation.style.border = '2px solid red';
+                                setTimeout(() => {
+                                    situation.style.border = '';
+                                }, 3000);
+                            }
+                        }
+                    }
+                }
+                scores.push(categoryScore);
+            }
+
+            // Auswertung der Wertekonflikte
+            const valueCodes = {
+                'E': 'Empathie/Mitgefühl',
+                'G': 'Gerechtigkeit',
+                'F': 'Freiheit/Autonomie',
+                'V': 'Verantwortung/Solidarität',
+                'H': 'Ehrlichkeit/Wahrhaftigkeit',
+                'T': 'Toleranz/Respekt',
+                'M': 'Menschenwürde',
+                'S': 'Selbstschutz'
+            };
+
+            let valueCounts = { E:0, G:0, F:0, V:0, H:0, T:0, M:0, S:0 };
+
+            // Für jede Dilemma-Frage (17-24)
+            for (let q = 17; q <= 24; q++) {
+                const selected = document.querySelector(`input[name="q${q}"]:checked`);
+                if (selected) {
+                    const value = selected.value;
+                    if (valueCounts.hasOwnProperty(value)) {
+                        valueCounts[value]++;
+                    }
+                } else {
+                    allAnswered = false;
+                    console.log(`Dilemma-Frage q${q} nicht beantwortet`);
+                    const questionElement = document.querySelector(`input[name="q${q}"]`);
+                    if (questionElement) {
+                        const situation = questionElement.closest('.situation');
+                        if (situation) {
+                            situation.style.border = '2px solid red';
+                            setTimeout(() => {
+                                situation.style.border = '';
+                            }, 3000);
+                        }
+                    }
+                }
+            }
+
+            if (!allAnswered) {
+                alert('Bitte beantworte alle Fragen, bevor du die Auswertung siehst. Die nicht beantworteten Fragen wurden rot markiert.');
+                return;
+            }
+
+            console.log("Alle Fragen beantwortet, zeige Ergebnisse an");
+            console.log("Scores:", scores);
+            console.log("Value counts:", valueCounts);
+
+            // Ergebnisse anzeigen
+            const resultsDiv = document.getElementById('results');
+            if (resultsDiv) {
+                resultsDiv.style.display = 'block';
+                console.log("Results div angezeigt");
+
+                // Ergebnisse für jede Kategorie anzeigen
+                for (let i = 1; i <= 8; i++) {
+                    const score = scores[i-1];
+                    const percentage = Math.round((score / 8) * 100);
+
+                    // Score anzeigen
+                    const scoreElement = document.getElementById(`score${i}`);
+                    if (scoreElement) scoreElement.textContent = `${score}/8`;
+
+                    const percentageElement = document.getElementById(`percentage${i}`);
+                    if (percentageElement) percentageElement.textContent = `${percentage}%`;
+
+                    // Fortschrittsbalken animieren
+                    setTimeout(() => {
+                        const progressElement = document.getElementById(`progress${i}`);
+                        if (progressElement) {
+                            progressElement.style.width = `${percentage}%`;
+                        }
+                    }, i * 100);
+
+                    // Interpretation hinzufügen
+                    let interpretation;
+                    if (score >= 7) {
+                        interpretation = "⭐ Hervorragend! Diese humanistischen Werte sind in deinem Handeln sehr stark verankert.";
+                    } else if (score >= 5) {
+                        interpretation = "🔹 Gut: Diese Werte sind dir wichtig, es gibt aber noch Raum für Weiterentwicklung.";
+                    } else {
+                        interpretation = "💡 Entwicklungspotential: Diese Werte könnten in deinem Alltag stärker berücksichtigt werden.";
+                    }
+
+                    const interpretationElement = document.getElementById(`interpretation${i}`);
+                    if (interpretationElement) interpretationElement.textContent = interpretation;
+                }
+
+                // Charts laden (nach kurzer Verzögerung um sicherzustellen dass alle Elemente da sind)
+                setTimeout(() => {
+                    try {
+                        updateRadarChart(scores);
+                        updateValueChart(valueCounts);
+                    } catch (error) {
+                        console.error("Fehler beim Laden der Charts:", error);
+                        // Charts optional - Ergebnisse sind bereits angezeigt
+                    }
+                }, 500);
+
+                // Zum Ergebnis scrollen
+                resultsDiv.scrollIntoView({ behavior: 'smooth' });
+
+            } else {
+                console.error("Results div nicht gefunden!");
+            }
+        }
+
+        function updateRadarChart(scores) {
+            console.log("Erstelle Radar Chart...");
+            const ctx = document.getElementById('radarChart');
+            if (!ctx) {
+                console.log("Radar Chart Canvas nicht gefunden");
+                return;
+            }
+
+            const canvasContext = ctx.getContext('2d');
+            const percentages = scores.map(score => Math.round((score / 8) * 100));
+
+            if (radarChart) {
+                radarChart.destroy();
+            }
+
+            radarChart = new Chart(canvasContext, {
+                type: 'radar',
+                data: {
+                    labels: ['Menschenwürde', 'Empathie', 'Gerechtigkeit', 'Freiheit', 'Verantwortung', 'Wahrhaftigkeit', 'Toleranz', 'Friedfertigkeit'],
+                    datasets: [{
+                        label: 'Dein humanistisches Profil',
+                        data: percentages,
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(52, 152, 219, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateValueChart(valueCounts) {
+            console.log("Erstelle Value Chart...");
+            const ctx = document.getElementById('valueChart');
+            if (!ctx) {
+                console.log("Value Chart Canvas nicht gefunden");
+                return;
+            }
+
+            const canvasContext = ctx.getContext('2d');
+            const valueCodes = {
+                'E': 'Empathie',
+                'G': 'Gerechtigkeit', 
+                'F': 'Freiheit',
+                'V': 'Verantwortung',
+                'H': 'Ehrlichkeit',
+                'T': 'Toleranz',
+                'M': 'Menschenwürde',
+                'S': 'Selbstschutz'
+            };
+
+            const labels = Object.keys(valueCodes).map(code => valueCodes[code]);
+            const data = Object.values(valueCounts);
+
+            if (valueChart) {
+                valueChart.destroy();
+            }
+
+            valueChart = new Chart(canvasContext, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Priorisierung in Konflikten',
+                        data: data,
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: 'rgba(52, 152, 219, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 8,
+                            title: {
+                                display: true,
+                                text: 'Anzahl der Priorisierungen'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+    </script></script>
+</body>
+</html>
